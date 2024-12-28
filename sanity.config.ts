@@ -1,6 +1,6 @@
-import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
-import {visionTool} from '@sanity/vision'
+import { defineConfig } from 'sanity'
+import { deskTool } from 'sanity/desk'
+import { visionTool } from '@sanity/vision'
 
 import article from './schemas/article'
 import author from './schemas/author'
@@ -21,7 +21,7 @@ export default defineConfig({
   name: 'default',
   title: 'Charlie Chan',
 
-  projectId: 'joet3wd5', // Replace with your actual project ID
+  projectId: 'joet3wd5',
   dataset: 'production',
 
   plugins: [deskTool(), visionTool()],
@@ -42,7 +42,7 @@ export default defineConfig({
       testimonial,
       review,
       series,
-      // Add your other schema types here...
     ],
   },
 })
+

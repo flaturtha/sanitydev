@@ -24,6 +24,14 @@ export default {
       validation: (Rule: any) => Rule.required(),
     },
     {
+      name: 'image',
+      title: 'Featured Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    },
+    {
       name: 'author',
       title: 'Author',
       type: 'reference',
@@ -34,6 +42,17 @@ export default {
       title: 'Published at',
       type: 'datetime',
       validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'body',
+      title: 'Body',
+      type: 'blockContent',
+    },
+    {
+      name: 'notableWorks',
+      title: 'Notable Works',
+      type: 'array', 
+      of: [{type: 'string'}],
     },
     {
       name: 'categories',
@@ -48,11 +67,6 @@ export default {
       of: [{ type: 'string' }],
     },
     {
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
-    },
-    {
       name: 'language',
       title: 'Language',
       type: 'reference',
@@ -61,7 +75,7 @@ export default {
     {
       name: 'seo',
       title: 'SEO',
-      type: 'seo',  // Reference the `seo` object type here
+      type: 'seo',
     },
   ],
 };
