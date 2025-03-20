@@ -33,11 +33,5 @@ export default {
         hotspot: true,
       },
     },
-    {
-      name: 'socialLinks',
-      title: 'Social Links',
-      type: 'array',
-      of: [{ type: 'url' }],
-    },
   ],
 };

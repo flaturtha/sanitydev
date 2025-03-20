@@ -1,4 +1,4 @@
-// schemas/category.ts
+// schemas/genre.ts
 export default {
   name: 'genre',
   title: 'Genre',

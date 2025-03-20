@@ -5,17 +5,25 @@ import { visionTool } from '@sanity/vision'
 import article from './schemas/article'
 import author from './schemas/author'
 import genre from './schemas/genre'
-import product from './schemas/product'
+import novel from './schemas/novel'
 import language from './schemas/language'
 import blockContent from './schemas/blockContent'
 import seo from './schemas/seo'
-import variant from './schemas/variant'
 import editions from './schemas/editions'
-import category from './schemas/category'
 import collection from './schemas/collection'
-import testimonial from './schemas/testimonial'
-import review from './schemas/review'
 import series from './schemas/series'
+import landingPage from './schemas/landingPage'
+import {
+  headerSection,
+  heroSection,
+  quickPurchaseSection,
+  featureSection,
+  productFeaturesSection,
+  alternativeEditionsSection,
+  testimonialsSection,
+  faqSection,
+  ctaSection,
+} from './schemas/sections'
 
 export default defineConfig({
   name: 'default',
@@ -31,17 +39,23 @@ export default defineConfig({
       article,
       author,
       genre,
-      product,
+      novel,
       language,
       blockContent,
       seo,
-      variant,
       editions,
-      category,
       collection,
-      testimonial,
-      review,
       series,
+      landingPage,
+      headerSection,
+      heroSection,
+      quickPurchaseSection,
+      featureSection,
+      productFeaturesSection,
+      alternativeEditionsSection,
+      testimonialsSection,
+      faqSection,
+      ctaSection,
     ],
   },
 })

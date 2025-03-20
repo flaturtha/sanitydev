@@ -55,10 +55,10 @@ export default {
       of: [{type: 'string'}],
     },
     {
-      name: 'categories',
-      title: 'Categories',
+      name: 'genres',
+      title: 'Genres',
       type: 'array',
-      of: [{ type: 'reference', to: { type: 'category' } }],
+      of: [{ type: 'reference', to: { type: 'genre' } }],
     },
     {
       name: 'tags',

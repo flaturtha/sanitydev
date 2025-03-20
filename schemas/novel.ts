@@ -1,20 +1,23 @@
 import seo from './seo'
 import editions from './editions'
-import testimonialSchema from './testimonial'
-import reviewSchema from './review'
 import series from './series'
 import collection from './collection'
+import { Rule } from '@sanity/types'
+
+interface DateParent {
+  dateType?: 'full' | 'yearMonth' | 'year'
+}
 
 export default {
-  name: 'product',
-  title: 'Product',
+  name: 'novel',
+  title: 'Novel',
   type: 'document',
   fields: [
     {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'slug',
@@ -24,55 +27,28 @@ export default {
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'author',
       title: 'Author',
       type: 'reference',
       to: [{type: 'author'}],
-      validation: (Rule: any) => Rule.required(),
+      validation: (rule: Rule) => rule.required(),
     },
     {
-      name: 'isbn',
-      title: 'ISBNs by Edition',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'edition',
-              title: 'Edition Type',
-              type: 'string',
-              options: {
-                list: [
-                  {title: 'Epub', value: 'epub'},
-                  {title: 'Kindle', value: 'kindle'},
-                  {title: 'Paperback', value: 'paperback'},
-                  {title: 'Large Print Paperback', value: 'large_print_paperback'},
-                  {title: 'Hardcover', value: 'hardcover'},
-                  {title: 'Audiobook', value: 'audiobook'},
-                ],
-              },
-              validation: (Rule) => Rule.required(),
-            },
-            {
-              name: 'isbn',
-              title: 'ISBN',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            },
-          ],
-        },
-      ],
+      name: 'baseMbin',
+      title: 'Base MBIN',
+      type: 'string',
+      description: 'Enter the base MBIN number (e.g., 1731950427-c5216d). Edition-specific identifiers (-E for ebook, -P for paperback, etc.) will be handled in the storefront.',
+      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'genre',
       title: 'Genre',
       type: 'reference',
       to: [{type: 'genre'}],
-      validation: (Rule: any) => Rule.required(),
+      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'coverImage',
@@ -88,10 +64,10 @@ export default {
       type: 'blockContent',
     },
     {
-      name: 'tagline',
-      title: 'Tagline',
+      name: 'teaser',
+      title: 'Teaser',
       type: 'string',
-      validation: (Rule) => Rule.max(150).warning('Tagline should not exceed 150 characters.'),
+      validation: (rule: Rule) => rule.max(150).warning('Teaser should not exceed 150 words.'),
     },
     {
       name: 'o_publishedAt',
@@ -110,30 +86,30 @@ export default {
             ],
             layout: 'radio', // Display as radio buttons
           },
-          validation: (Rule) => Rule.required(),
+          validation: (rule: Rule) => rule.required(),
         },
         {
           name: 'fullDate',
           title: 'Full Date',
           type: 'datetime',
-          hidden: ({parent}) => !parent || parent.dateType !== 'full',
+          hidden: ({parent}: {parent: DateParent}) => !parent || parent.dateType !== 'full',
         },
         {
           name: 'yearMonth',
           title: 'Year and Month',
           type: 'object',
-          hidden: ({parent}) => !parent || parent.dateType !== 'yearMonth',
+          hidden: ({parent}: {parent: DateParent}) => !parent || parent.dateType !== 'yearMonth',
           fields: [
-            {name: 'year', type: 'number', title: 'Year', validation: (Rule) => Rule.required()},
-            {name: 'month', type: 'number', title: 'Month', validation: (Rule) => Rule.required()},
+            {name: 'year', type: 'number', title: 'Year', validation: (rule: Rule) => rule.required()},
+            {name: 'month', type: 'number', title: 'Month', validation: (rule: Rule) => rule.required()},
           ],
         },
         {
           name: 'yearOnly',
           title: 'Year Only',
           type: 'number',
-          hidden: ({parent}) => !parent || parent.dateType !== 'year',
-          validation: (Rule) => Rule.min(1000).max(new Date().getFullYear()),
+          hidden: ({parent}: {parent: DateParent}) => !parent || parent.dateType !== 'year',
+          validation: (rule: Rule) => rule.min(1000).max(new Date().getFullYear()),
         },
       ],
     },
@@ -151,6 +127,11 @@ export default {
       name: 'seo',
       title: 'SEO',
       type: 'seo',
+      description: 'SEO metadata - will use novel title and blurb if meta fields are left empty',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      }
     },
     {
       name: 'wordCount',
@@ -162,7 +143,6 @@ export default {
       name: 'editions',
       title: 'Available Editions',
       type: 'editions',
-      of: [editions],
     },
     {
       name: 'series',
@@ -203,18 +183,6 @@ export default {
       title: 'Awards & Recognitions',
       type: 'array',
       of: [{type: 'string'}],
-    },
-    {
-      name: 'testimonials',
-      title: 'Testimonials',
-      type: 'array',
-      of: [{type: 'testimonial'}], // Allow multiple testimonials
-    },
-    {
-      name: 'reviews',
-      title: 'Reviews',
-      type: 'array',
-      of: [{type: 'review'}],
     },
     {
       name: 'reviewCount',

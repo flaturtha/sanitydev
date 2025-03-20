@@ -45,7 +45,7 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{ type: 'product' }],
+          to: [{ type: 'novel' }],
         },
       ],
     },
